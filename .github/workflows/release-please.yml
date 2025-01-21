@@ -1,0 +1,53 @@
+name: autorelease
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        if: ${{ github.ref_name == 'master' }}
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release-type: node
+      
+      - name: Checkout Repository
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Get Local Version
+        id: local_version
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          echo "VERSION=$(cat ${{ github.workspace }}/package.json | jq '.version')" >> $GITHUB_OUTPUT
+          echo "PKG_NAME=$(cat ${{ github.workspace }}/package.json | jq '.name')" >> $GITHUB_OUTPUT
+      - name: Publish to npm
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HAS_PERIOD: ${{ contains(steps.local_version.outputs.VERSION, 'alpha') || contains(steps.local_version.outputs.VERSION, 'beta') || contains(steps.local_version.outputs.VERSION, 'rc') }}
+          PERIOD_NOT_PUBLISH: ${{ env.HAS_PERIOD == 'true' && github.ref_name == 'master' }}
+        run: |
+          if [[ $(npm view ${{ format('{0}@{1}', steps.local_version.outputs.PKG_NAME, steps.local_version.outputs.VERSION) }}) ]] || [[ ${{ env.PERIOD_NOT_PUBLISH }} == true ]]; then
+            echo "the package has published."
+          else
+            npm install
+            npm run build
+            npm publish --access public
+          fi
