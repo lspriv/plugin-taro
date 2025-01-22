@@ -11,7 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  release-please:
+  alpha-package:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
