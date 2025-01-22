@@ -15,22 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Get Local Version
         id: local_version
-        if: ${{ steps.release.outputs.release_created }}
         run: |
           echo "VERSION=$(cat ${{ github.workspace }}/package.json | jq '.version')" >> $GITHUB_OUTPUT
           echo "PKG_NAME=$(cat ${{ github.workspace }}/package.json | jq '.name')" >> $GITHUB_OUTPUT
       - name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           HAS_PERIOD: ${{ contains(steps.local_version.outputs.VERSION, 'alpha') || contains(steps.local_version.outputs.VERSION, 'beta') || contains(steps.local_version.outputs.VERSION, 'rc') }}
