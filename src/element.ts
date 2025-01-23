@@ -23,7 +23,7 @@ export type CalendarElementProps = {
 export type CalendarTaroEvent<T> = Omit<TaroEvent, 'mpEvent'> & { mpEvent: CalendarCustomEvent<T> };
 
 type CalendarElementEvents = {
-  [P in CalendarEventSimplified as `on${Capitalize<P>}`]: (event: CalendarTaroEvent<P>) => void;
+  [P in CalendarEventSimplified as `on${Capitalize<P>}`]: (event: CalendarTaroEvent<P> | CalendarCustomEvent<P>) => void;
 };
 
 type CalendarElementKeys =
