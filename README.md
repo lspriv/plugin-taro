@@ -70,7 +70,7 @@ export default definePageConfig({
 ```tsx
 // [react] page.tsx
 import { View } from '@tarojs/components'
-import { WxCalendar, CalendarMark } from '@lspriv/wx-calendar/lib';
+import { WxCalendar, CalendarMark, CalendarCustomEvent } from '@lspriv/wx-calendar/lib';
 import { LunarPlugin } from '@lspriv/wc-plugin-lunar';
 import { ReactWxCalendarElement, CalendarTaroEvent } from '@lspriv/plugin-taro';
 
@@ -93,6 +93,11 @@ export default function Index () {
     console.log(e);
   }
 
+  // 有时触发的事件参数可能是这样的
+  // const onChange = (e: CalendarCustomEvent<'change'>) => {
+  //   console.log(e);
+  // }
+
   const onViewchange = (e: CalendarTaroEvent<'viewchange'>) => {
     console.log(e);
   }
@@ -113,7 +118,7 @@ export default function Index () {
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { CalendarMark } from '@lspriv/wx-calendar/lib';
+  import { CalendarMark, CalendarCustomEvent } from '@lspriv/wx-calendar/lib';
   import { LunarPlugin } from '@lspriv/wc-plugin-lunar';
   import { CalendarTaroEvent } from '@lspriv/plugin-taro';
 
@@ -121,6 +126,10 @@ export default function Index () {
   const onChange = (e: CalendarTaroEvent<'change'>) => {
     console.log(e);
   }
+  // 有时触发的事件参数可能是这样的
+  // const onChange = (e: CalendarCustomEvent<'change'>) => {
+  //   console.log(e);
+  // }
   const onViewchange = (e: CalendarTaroEvent<'viewchange'>) => {
     console.log(e);
   }
