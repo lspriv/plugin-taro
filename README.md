@@ -34,7 +34,7 @@ export default defineConfig({
 Mac：/Applications/wechatwebdevtools.app/Contents/MacOS/cli
 Win：C:/Program Files (x86)/Tencent/微信web开发者工具/cli.bat
 ```
-[***`plugins`***](#plugins) `string[]` 要使用的小程序插件
+[***`plugins`***](#plugins) `string[]` 要使用的小程序日历插件
 
 [***`pkgManager`***](#pkgManager) `npm | pnpm | cnpm` 包管理工具，可选
 ```text
@@ -55,7 +55,7 @@ Win：C:/Program Files (x86)/Tencent/微信web开发者工具/cli.bat
   "files": ["node_modules/miniprogram-api-typings/index.d.ts"]
 }
 ```
-> [!INFO]
+> [!NOTE]
 > 如果想关闭小程序miniprogram-api-typings的类型补充，请设置属性 `resolveMnpApiTypings` 为 `false`
 
 #### 页面使用示例
