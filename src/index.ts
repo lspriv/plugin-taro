@@ -20,7 +20,7 @@ import pkgJsonTpl from './package.mini.tpl.json';
 
 import 'colors';
 
-const TPL_RELT_DIR = '.lspriv';
+const TPL_RLT_DIR = '.lspriv';
 const PKG_JSON = 'package.json';
 
 const VITE_PLUGIN_NAME = '@lspriv/plugin-taro:vite';
@@ -79,8 +79,8 @@ const resolveMnpApiTypings = (npm: string, installer: (pkg: string, args?: strin
   installer(`${MNP_API_TYPINGS}@^3.12.0`, ['-D']);
 };
 
-const checkMnpBuilding = (outpath: string): boolean => {
-  const mnp_calendar_path = resolve(outpath, 'miniprogram_npm', WX_CALENDAR_PKG_NAME);
+const checkMnpBuilding = (output: string): boolean => {
+  const mnp_calendar_path = resolve(output, 'miniprogram_npm', WX_CALENDAR_PKG_NAME);
   return pathExistsSync(mnp_calendar_path);
 }
 
@@ -109,8 +109,8 @@ export default (ctx: IPluginContext, opts: CalendarPluginOptions = {}) => {
   const output = ctx.paths.outputPath;
   const { NPM_DIR, NODE_MODULES } = ctx.helper;
 
-  const TPL_NPM_DIR = `${NPM_DIR}/${TPL_RELT_DIR}`;
-  const PKG_TPL_DIR = `${NODE_MODULES}/${TPL_RELT_DIR}`;
+  const TPL_NPM_DIR = `${NPM_DIR}/${TPL_RLT_DIR}`;
+  const PKG_TPL_DIR = `${NODE_MODULES}/${TPL_RLT_DIR}`;
 
   const cli = createCli(output);
   let installer;
@@ -132,7 +132,7 @@ export default (ctx: IPluginContext, opts: CalendarPluginOptions = {}) => {
   const compWxmlPath = resolve(tplPkgDir, 'index.wxml');
   const compJsonPath = resolve(tplPkgDir, 'index.json');
 
-  const tplRegexp = new RegExp(`("|'|\`)([^"'\`/]*/)*(${NODE_MODULES}|${NPM_DIR})/${TPL_RELT_DIR}/${WX_CALENDAR_PKG_NAME}(/[^"'\`]*)?("|'|\`)?`);
+  const tplRegexp = new RegExp(`("|'|\`)([^"'\`/]*/)*(${NODE_MODULES}|${NPM_DIR})/${TPL_RLT_DIR}/${WX_CALENDAR_PKG_NAME}(/[^"'\`]*)?("|'|\`)?`);
 
   ctx.modifyRunnerOpts(({ opts }) => {
     opts.alias = opts.alias || {};
