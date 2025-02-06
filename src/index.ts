@@ -253,4 +253,4 @@ export default (ctx: IPluginContext, opts: CalendarPluginOptions = {}) => {
   });
 };
 
-export { ReactWxCalendarElement, CalendarElementProps, CalendarTaroEvent } from './element';
+export * from './element';
