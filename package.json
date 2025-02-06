@@ -1,7 +1,7 @@
 {
   "name": "@lspriv/plugin-taro",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.2-alpha.0",
+  "description": "小程序日历组件Taro插件",
   "keywords": [
     "Taro",
     "Plugin",

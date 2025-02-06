@@ -16,7 +16,6 @@ import {
   PKG_LATEST_VERSION,
   PkgJson
 } from './utils';
-import pkgJsonTpl from './package.mini.tpl.json';
 
 import 'colors';
 
@@ -231,7 +230,7 @@ export default (ctx: IPluginContext, opts: CalendarPluginOptions = {}) => {
       };
     } else {
       const prjConfig = getPrjConfig();
-      const pkgJson = { ...pkgJsonTpl } as PkgJson;
+      const pkgJson = {} as PkgJson;
       pkgJson.name = prjConfig.projectname || pkgConfig.name;
       pkgJson.version = pkgConfig.version;
       pkgJson.author = pkgConfig.author || '';
@@ -254,4 +253,4 @@ export default (ctx: IPluginContext, opts: CalendarPluginOptions = {}) => {
   });
 };
 
-export { ReactWxCalendarElement, CalendarElementProps, CalendarTaroEvent } from './element';
+export * from './element';
