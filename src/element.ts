@@ -20,12 +20,10 @@ export type CalendarElementProps = {
   [P in keyof CalendarProp as LowerCamelToSnake<P, '-'>]?: WechatMiniprogram.Component.PropertyToData<CalendarProp[P]>;
 };
 
-type MpTaroEvent<T> = Omit<TaroEvent, 'mpEvent'> & { mpEvent: CalendarCustomEvent<T> };
-
-export type CalendarTaroEvent<T> = MpTaroEvent<T> | CalendarCustomEvent<T>;
+export type CalendarTaroEvent<T extends CalendarEventSimplified> = Omit<TaroEvent, 'mpEvent'> & { mpEvent: CalendarCustomEvent<T> };
 
 type CalendarElementEvents = {
-  [P in CalendarEventSimplified as `on${Capitalize<P>}`]: (event: CalendarTaroEvent<P>) => void;
+  [P in CalendarEventSimplified as `on${Capitalize<P>}`]: (event: CalendarTaroEvent<P> | CalendarCustomEvent<P>) => void;
 };
 
 type CalendarElementKeys =
